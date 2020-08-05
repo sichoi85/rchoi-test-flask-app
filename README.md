@@ -1,16 +1,3 @@
----
-page_type: sample
-languages:
-- python
-- tsql
-- sql
-products:
-- azure
-- vs-code
-- azure-sql-database
-description: "Creating a modern REST API with Python and Azure SQL, using Flask and Visual Studio Code"
-urlFragment: "azure-sql-db-python-rest-api"
----
 
 # Creating a REST API with Python and Azure SQL
 
@@ -212,3 +199,6 @@ provided by the bot. You will only need to do this once across all repos using o
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+=======
+# azure-flask-app
+>>>>>>> e78023fc49fa906568c7b03aaf10c492ccd82067
