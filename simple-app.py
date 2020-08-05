@@ -28,7 +28,8 @@ conn = pyodbc.connect(os.environ['SQLAZURECONNSTR_WWIF'])
 class Customer(Resource):
     def get(self, customer_id):     
         customer = {"CustomerID": customer_id}
-        cursor = conn.cursor()    
+        cursor = conn.cursor()
+        print("running this one")
         cursor.execute("EXEC web.get_customer ?", json.dumps(customer))
         result = json.loads(cursor.fetchone()[0])        
         cursor.close()

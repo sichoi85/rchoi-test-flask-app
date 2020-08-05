@@ -52,12 +52,14 @@ class ConnectionManager(object):
     @retry(stop=stop_after_attempt(3), wait=wait_fixed(10), retry=retry_if_exception_type(pyodbc.OperationalError), after=after_log(app.logger, logging.DEBUG))
     def executeQueryJSON(self, procedure, payload=None):
         result = {}  
-        try:
-            conn = self.__getConnection()
+        conn = self.__getConnection()
 
-            cursor = conn.cursor()
-            
+        cursor = conn.cursor()
+        
+        try: 
             if payload:
+                print("procedure")
+                print(procedure)
                 cursor.execute(f"EXEC {procedure} ?", json.dumps(payload))
             else:
                 cursor.execute(f"EXEC {procedure}")
@@ -70,7 +72,7 @@ class ConnectionManager(object):
                 result = {}
 
             cursor.commit()    
-        except pyodbc.OperationalError as e:            
+        except pyodbc.OperationalError as e:        
             app.logger.error(f"{e.args[1]}")
             if e.args[0] == "08S01":
                 # If there is a "Communication Link Failure" error, 
@@ -88,14 +90,17 @@ class Queryable(Resource):
         result = {}  
         entity = type(self).__name__.lower()
         procedure = f"web.{verb}_{entity}"
+        print(procedure)
         result = ConnectionManager().executeQueryJSON(procedure, payload)
         return result
 
 # Customer Class
 class Customer(Queryable):
     def get(self, customer_id):     
+        print("running this one?")
         customer = {}
         customer["CustomerID"] = customer_id
+        print(customer)
         result = self.executeQueryJson("get", customer)   
         return result, 200
     
