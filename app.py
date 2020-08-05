@@ -42,7 +42,7 @@ class ConnectionManager(object):
     def __getConnection(self):
         if (self.__connection == None):
             application_name = ";APP={0}".format(socket.gethostname())  
-            self.__connection = pyodbc.connect(os.environ['SQLAZURECONNSTR_WWIF'] + application_name)                  
+            self.__connection = pyodbc.connect(os.environ['sql_rchoi_connection_string'] + application_name)                  
         
         return self.__connection
 
