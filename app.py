@@ -128,7 +128,12 @@ class Customers(Queryable):
     def get(self):     
         result = self.executeQueryJson("get")   
         return result, 200
+
+class Test(Queryable):
+    def get(self):
+        return "hello there"
     
 # Create API routes
 api.add_resource(Customer, '/customer', '/customer/<customer_id>')
 api.add_resource(Customers, '/customers')
+api.add_resource(Test, '/test')
