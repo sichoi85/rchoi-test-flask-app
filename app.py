@@ -131,7 +131,7 @@ class Customers(Queryable):
 
 class Test(Queryable):
     def get(self):
-        return "hello there"
+        return os.environ['sql_rchoi_connection_string']
     
 # Create API routes
 api.add_resource(Customer, '/customer', '/customer/<customer_id>')
