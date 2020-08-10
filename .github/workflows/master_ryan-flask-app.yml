@@ -11,9 +11,16 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@master    
+
+    - uses: azure/login@v1.1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - run: |
+        az webapp list --query "[?state=='Running']"
 
     - name: Set up Python version
       uses: actions/setup-python@v1

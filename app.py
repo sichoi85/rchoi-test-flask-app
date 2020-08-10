@@ -90,14 +90,12 @@ class Queryable(Resource):
         result = {}  
         entity = type(self).__name__.lower()
         procedure = f"web.{verb}_{entity}"
-        print(procedure)
         result = ConnectionManager().executeQueryJSON(procedure, payload)
         return result
 
 # Customer Class
 class Customer(Queryable):
     def get(self, customer_id):     
-        print("running this one?")
         customer = {}
         customer["CustomerID"] = customer_id
         print(customer)
@@ -107,6 +105,8 @@ class Customer(Queryable):
     def put(self):
         args = parser.parse_args()
         customer = json.loads(args['customer'])
+        print("customer----")
+        print(customer)
         result = self.executeQueryJson("put", customer)
         return result, 201
 
@@ -119,6 +119,7 @@ class Customer(Queryable):
 
     def delete(self, customer_id):       
         customer = {}
+        print("delete--")
         customer["CustomerID"] = customer_id
         result = self.executeQueryJson("delete", customer)
         return result, 202
@@ -132,6 +133,15 @@ class Customers(Queryable):
 class Test(Queryable):
     def get(self):
         return os.environ['sql_rchoi_connection_string']
+
+@app.route("/im_size", methods=["POST"])
+def process_image():
+    file = request.files['image']
+    # Read the image via file.stream
+    img = Image.open(file.stream)
+
+    return jsonify({'msg': 'success', 'size': [img.width, img.height]})
+
     
 # Create API routes
 api.add_resource(Customer, '/customer', '/customer/<customer_id>')
