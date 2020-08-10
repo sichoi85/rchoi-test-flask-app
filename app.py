@@ -14,7 +14,7 @@ from flask import Flask, request, jsonify
 import jsonify
 
 import sys
-sys.path.insert(0, '/Users/sungilchoi/Projects/django-to-azure/azure-sql-db-python-rest-api/src/google_vision_api.py')
+sys.path.insert(0, '/src/google_vision_api.py')
 import google_vision_api 
 
 
@@ -148,7 +148,7 @@ def process_image():
 
     return jsonify({'msg': 'success', 'size': [img.width, img.height]})
 
-app.config["IMAGE_UPLOADS"] = "/Users/sungilchoi/Projects/"
+app.config["IMAGE_UPLOADS"] = "./downloads"
 @app.route("/upload-image", methods=["GET", "POST"])
 def upload_image():
     if request.method == "POST":
