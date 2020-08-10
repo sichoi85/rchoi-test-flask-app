@@ -3,7 +3,6 @@ import os
 import json
 import pyodbc
 import socket
-from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from threading import Lock
 from tenacity import *
@@ -11,6 +10,13 @@ from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 from opencensus.trace.samplers import ProbabilitySampler
 import logging
+from flask import Flask, request, jsonify
+import jsonify
+
+import sys
+sys.path.insert(0, '/src/google_vision_api.py')
+import google_vision_api 
+
 
 # Initialize Flask
 app = Flask(__name__)
@@ -90,14 +96,12 @@ class Queryable(Resource):
         result = {}  
         entity = type(self).__name__.lower()
         procedure = f"web.{verb}_{entity}"
-        print(procedure)
         result = ConnectionManager().executeQueryJSON(procedure, payload)
         return result
 
 # Customer Class
 class Customer(Queryable):
     def get(self, customer_id):     
-        print("running this one?")
         customer = {}
         customer["CustomerID"] = customer_id
         print(customer)
@@ -107,6 +111,8 @@ class Customer(Queryable):
     def put(self):
         args = parser.parse_args()
         customer = json.loads(args['customer'])
+        print("customer----")
+        print(customer)
         result = self.executeQueryJson("put", customer)
         return result, 201
 
@@ -119,6 +125,7 @@ class Customer(Queryable):
 
     def delete(self, customer_id):       
         customer = {}
+        print("delete--")
         customer["CustomerID"] = customer_id
         result = self.executeQueryJson("delete", customer)
         return result, 202
@@ -132,7 +139,25 @@ class Customers(Queryable):
 class Test(Queryable):
     def get(self):
         return os.environ['sql_rchoi_connection_string']
+
+@app.route("/im_size", methods=["POST"])
+def process_image():
+    file = request.files['image']
+    # Read the image via file.stream
+    img = Image.open(file.stream)
+
+    return jsonify({'msg': 'success', 'size': [img.width, img.height]})
+
+app.config["IMAGE_UPLOADS"] = "./downloads"
+@app.route("/upload-image", methods=["GET", "POST"])
+def upload_image():
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+            return google_vision_api.detect_text(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
     
+
 # Create API routes
 api.add_resource(Customer, '/customer', '/customer/<customer_id>')
 api.add_resource(Customers, '/customers')

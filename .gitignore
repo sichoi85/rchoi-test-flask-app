@@ -334,3 +334,6 @@ venv/
 env/
 env.*
 .env
+
+# credentials
+cred/
