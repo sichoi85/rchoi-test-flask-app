@@ -3,7 +3,6 @@ import os
 import json
 import pyodbc
 import socket
-from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from threading import Lock
 from tenacity import *
@@ -11,6 +10,13 @@ from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 from opencensus.trace.samplers import ProbabilitySampler
 import logging
+from flask import Flask, request, jsonify
+import jsonify
+
+import sys
+sys.path.insert(0, '/Users/sungilchoi/Projects/django-to-azure/azure-sql-db-python-rest-api/src/google_vision_api.py')
+import google_vision_api 
+
 
 # Initialize Flask
 app = Flask(__name__)
@@ -142,7 +148,16 @@ def process_image():
 
     return jsonify({'msg': 'success', 'size': [img.width, img.height]})
 
+app.config["IMAGE_UPLOADS"] = "/Users/sungilchoi/Projects/"
+@app.route("/upload-image", methods=["GET", "POST"])
+def upload_image():
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+            return google_vision_api.detect_text(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
     
+
 # Create API routes
 api.add_resource(Customer, '/customer', '/customer/<customer_id>')
 api.add_resource(Customers, '/customers')
