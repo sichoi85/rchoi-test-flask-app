@@ -33,5 +33,3 @@ def detect_text(path):
             '{}\nFor more info on error messages, check: '
             'https://cloud.google.com/apis/design/errors'.format(
                 response.error.message))
-
-detect_text('/Users/sungilchoi/Projects/django-to-azure/azure-sql-db-python-rest-api/assets/receipt.jpg')
