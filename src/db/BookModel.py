@@ -13,6 +13,7 @@ params = urllib.parse.quote_plus("""Driver={ODBC Driver 17 for SQL Server};Serve
 # initialization
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # extensions
