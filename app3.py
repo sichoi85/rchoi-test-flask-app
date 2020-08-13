@@ -3,7 +3,8 @@ import json
 from definitions import APP_PATH
 import sys
 import os
-#sys.path.append(APP_PATH)
+print(sys.path)
+sys.path.append(APP_PATH)
 from db.BookModel import app
 from db.BookModel import Book
 
