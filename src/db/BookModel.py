@@ -6,7 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 
 # Configure Database URI: 
-params = urllib.parse.quote_plus("Driver={ODBC Driver 17 for SQL Server};Server=tcp:rchoi-sql-server.database.windows.net,1433;Database=rchoi-db-v1;Uid=rchoidev;Pwd=Hongsifam33;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;")
+password = os.environ['password']
+# Configure Database URI: 
+params = urllib.parse.quote_plus("""Driver={ODBC Driver 17 for SQL Server};Server=tcp:rchoi-sql-server.database.windows.net,1433;Database=rchoi-db-v1;Uid=rchoidev;Pwd=%s;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;""" % (password))
 
 # initialization
 app = Flask(__name__)
