@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, Response
 import json
 from definitions import APP_PATH
 import sys
+import os
 sys.path.append(APP_PATH)
 from db.BookModel import app
 from db.BookModel import Book
@@ -189,7 +190,14 @@ def delete_book(isbn):
 	}
 	response = Response(json.dumps(invalidBookObjectErrorMsg), status=404, mimetype='application/json')
 	return response
+
+@app.route('/test', methods=['GET'])
+def test():
+	return "%s, %s, %s" % (os.environ['password'], os.environ['FLASK_ENV'], os.environ['sql_rchoi_connection_string'])
+
 app.run(port=5000)
+
+
 
 # Okay so in this video we ran some test cases and discussed what happens if we
 # try to delete the same resource twice.
