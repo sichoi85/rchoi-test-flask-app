@@ -229,9 +229,6 @@ def get_image_size():
     return jsonify({'msg': 'success', 'size': [img.width, img.height]})
 
 
-app.config["PROCESS_IMAGE"] = "./downloads"
-
-
 @app.route("/process-image", methods=["GET", "POST"])
 def process_image():
     if request.method == "POST":
