@@ -217,7 +217,7 @@ def delete_book(isbn):
 
 @app.route('/test', methods=['GET'])
 def test():
-    return "%s, %s, %s" % (os.environ['password'], os.environ['FLASK_ENV'], os.environ['sql_rchoi_connection_string'])
+    return "rchoi%s, %s, %s" % (os.environ['password'], os.environ['FLASK_ENV'], os.environ['sql_rchoi_connection_string'])
 
 
 @app.route("/im_size", methods=["POST"])
@@ -240,9 +240,6 @@ def process_image():
             image.save(os.path.join(
                 app.config["IMAGE_UPLOADS"], image.filename))
             return google_vision_api.detect_text(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-
-
-app.config['IMAGE_DOWNLOADS'] = './images'
 
 
 @app.route("/upload-image", methods=["GET", "POST"])
