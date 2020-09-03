@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "venv/bin/python",
+  "python.pythonPath": "/Users/sungilchoi/Projects/django-to-azure/azure-sql-db-python-rest-api/venv2/bin/python3",
   "cSpell.words": ["pyodbc"],
   "python.formatting.autopep8Args": ["--ignore", "E402"]
 }
