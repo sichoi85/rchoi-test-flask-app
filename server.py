@@ -242,9 +242,6 @@ def process_image():
             return google_vision_api.detect_text(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
 
 
-app.config['IMAGE_DOWNLOADS'] = './images'
-
-
 @app.route("/upload-image", methods=["GET", "POST"])
 def upload_image():
     con_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
