@@ -217,7 +217,7 @@ def delete_book(isbn):
 
 @app.route('/test', methods=['GET'])
 def test():
-    return "rchoi%s, %s, %s" % (os.environ['password'], os.environ['FLASK_ENV'], os.environ['sql_rchoi_connection_string'])
+    return "rchoi what %s, %s, %s" % (os.environ['password'], os.environ['FLASK_ENV'], os.environ['sql_rchoi_connection_string'])
 
 
 @app.route("/im_size", methods=["POST"])
