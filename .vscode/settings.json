@@ -1,6 +1,5 @@
 {
-    "python.pythonPath": "venv/bin/python",
-    "cSpell.words": [
-        "pyodbc"
-    ]
+  "python.pythonPath": "venv/bin/python",
+  "cSpell.words": ["pyodbc"],
+  "python.formatting.autopep8Args": ["--ignore", "E402"]
 }
